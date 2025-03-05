@@ -10,8 +10,6 @@ Ensure you have the following installed on your Windows machine:
 Open PowerShell and navigate to the location where you want to store your project. Run:
 
 ```powershell
-Copy
-Edit
 mkdir lamp_docker
 cd lamp_docker
 ```
@@ -21,8 +19,6 @@ cd lamp_docker
 Run the following command to create the file:
 
 ```powershell
-Copy
-Edit
 New-Item -Path . -Name "docker-compose.yml" -ItemType "file"
 ```
 
