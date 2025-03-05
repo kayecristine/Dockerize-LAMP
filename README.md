@@ -178,3 +178,37 @@ Log in to phpMyAdmin
 * Server:	lamp_mysql or localhost
 * Username:	root or user
 * Password:	rootpassword (for root) or userpassword (for user)
+
+## Step 5: Stopping and Restarting the Containers
+To Stop the Containers
+```powershell
+docker-compose down
+```
+To Restart the Containers
+```powershell
+docker-compose up -d
+```
+## Step 6: Cleanup (Stopping and Removing Containers & Volumes)
+After testing your LAMP stack, you may want to clean up your environment to free up system resources. Run the following commands in PowerShell:
+
+Stop and remove all containers:
+
+```powershell
+docker-compose down
+```
+
+This stops and removes all running containers for the LAMP stack.
+
+Remove unused Docker images (optional):
+
+```powershell
+docker image prune -a
+```
+This deletes all unused images to free up disk space.
+
+Remove unused volumes (optional):
+
+```powershell
+docker volume prune
+```
+This removes any Docker volumes not in use by active containers.
