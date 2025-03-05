@@ -86,7 +86,7 @@ networks:
 ```
 Save and close the file.
 
-## 2.2 Create a Dockerfile for PHP
+2.2 Create a Dockerfile for PHP
 
 ```powershell
 New-Item -Path . -Name "Dockerfile" -ItemType "file"
@@ -104,7 +104,7 @@ COPY src/ /var/www/html
 ```
 Save and close the file.
 
-## 2.3 Create an nginx Folder and Configuration File
+2.3 Create an nginx Folder and Configuration File
 
 ```powershell
 mkdir nginx
@@ -134,6 +134,47 @@ server {
 ```
 Save and close the file.
 
-## 2.4 Create the `src` Folder and an `index.php` File
+2.4 Create the `src` Folder and an `index.php` File
 
+```powershell
+mkdir src
+New-Item -Path "./src" -Name "index.php" -ItemType "file"
+```
+Paste the following content into `src/index.php`:
 
+```php
+<?php
+phpinfo();
+?>
+```
+Save and close the file.
+
+## Step 3: Build and Run the Containers
+Go to your project folder in PowerShell and run:
+
+```powershell
+docker-compose up -d --build
+```
+
+This will:
+* ✅ Build the PHP container
+* ✅ Pull MySQL, Nginx, and phpMyAdmin images
+* ✅ Start all services in detached mode
+
+## Step 4: Verify the Setup
+4.1 Check Running Containers
+```powershell
+docker ps
+```
+
+You should see `lamp_nginx`, `lamp_php`, `lamp_mysql`, and `lamp_phpmyadmin` running.
+
+4.2 Open in Browser
+* PHP Info Page: http://localhost:8080
+* phpMyAdmin: http://localhost:8081
+
+Log in to phpMyAdmin
+
+* Server:	lamp_mysql or localhost
+* Username:	root or user
+* Password:	rootpassword (for root) or userpassword (for user)
