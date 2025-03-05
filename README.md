@@ -19,15 +19,6 @@ cd lamp_docker
 Run the following command to create the file:
 
 ```powershell
-# Create directories
-New-Item -Path . -Name "mysql" -ItemType "directory"
-New-Item -Path . -Name "nginx" -ItemType "directory"
-New-Item -Path . -Name "src" -ItemType "directory"
-
-# Create required files inside directories
-New-Item -Path .\nginx -Name "default.conf" -ItemType "file"
-New-Item -Path .\src -Name "index.php" -ItemType "file"
-New-Item -Path .\mysql -Name "init.sql" -ItemType "file"
 New-Item -Path . -Name "docker-compose.yml" -ItemType "file"
 ```
 
