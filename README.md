@@ -17,7 +17,7 @@ cd lamp_docker
 ```
 
 ## Step 2: Create Required Files
-** 2.1 Create docker-compose.yml
+2.1 Create docker-compose.yml
 Run the following command to create the file:
 
 ```powershell
@@ -27,3 +27,113 @@ New-Item -Path . -Name "docker-compose.yml" -ItemType "file"
 ```
 
 Then, open it in Notepad or any text editor and paste the following content:
+
+```yaml
+version: '3.8'
+
+services:
+  lamp_php:
+    build: .
+    container_name: lamp_php
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - lamp_network
+
+  lamp_mysql:
+    image: mysql:8.0
+    container_name: lamp_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - lamp_network
+
+  lamp_nginx:
+    image: nginx:latest
+    container_name: lamp_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - lamp_php
+    networks:
+      - lamp_network
+
+  lamp_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: lamp_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: lamp_mysql
+      MYSQL_ROOT_PASSWORD: rootpassword
+    depends_on:
+      - lamp_mysql
+    networks:
+      - lamp_network
+
+networks:
+  lamp_network:
+```
+Save and close the file.
+
+## 2.2 Create a Dockerfile for PHP
+
+```powershell
+New-Item -Path . -Name "Dockerfile" -ItemType "file"
+```
+Paste the following content:
+
+```dockerfile
+FROM php:8.2-fpm-alpine
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+WORKDIR /var/www/html
+
+COPY src/ /var/www/html
+```
+Save and close the file.
+
+## 2.3 Create an nginx Folder and Configuration File
+
+```powershell
+mkdir nginx
+New-Item -Path "./nginx" -Name "default.conf" -ItemType "file"
+```
+Paste the following content into `nginx/default.conf`:
+
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+
+    root /var/www/html;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass lamp_php:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME /var/www/html$fastcgi_script_name;
+    }
+}
+```
+Save and close the file.
+
+## 2.4 Create the `src` Folder and an `index.php` File
+
+
