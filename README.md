@@ -145,6 +145,31 @@ phpinfo();
 ```
 Save and close the file.
 
+2.4 Create the `mysql` Folder and an `init.sql` File
+
+```powershell
+mkdir mysql
+New-Item -Path "./mysql" -Name "init.sql" -ItemType "file"
+```
+Paste the following content into `mysql\init.sql`:
+
+```php
+CREATE DATABASE IF NOT EXISTS mydatabase;
+
+USE mydatabase;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (name, email) VALUES
+('Alice', 'alice@example.com'),
+('Bob', 'bob@example.com');
+```
+Save and close the file.
 ## Step 3: Build and Run the Containers
 Go to your project folder in PowerShell and run:
 
