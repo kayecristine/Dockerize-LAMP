@@ -1,8 +1,8 @@
 # Dockerize-LAMP
 Dockerize LAMP
 
-##1. Project Structure
-**Create a project folder and navigate into it:
+## 1. Project Structure
+** Create a project folder and navigate into it:
 
 * bash
 * Copy
