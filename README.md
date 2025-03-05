@@ -145,7 +145,7 @@ phpinfo();
 ```
 Save and close the file.
 
-2.4 Create the `mysql` Folder and an `init.sql` File
+2.5 Create the `mysql` Folder and an `init.sql` File
 
 ```powershell
 mkdir mysql
