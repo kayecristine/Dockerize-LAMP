@@ -1,4 +1,4 @@
-# Setting Up a LAMP Stack with Docker
+# Dockerizing a LAMP Stack
 
 ## Prerequisites
 Ensure you have the following installed on your Windows machine:
